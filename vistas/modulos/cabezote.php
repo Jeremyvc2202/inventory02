@@ -3,7 +3,7 @@
         
         <!-- Título centrado en el medio sin afectar los elementos a la derecha -->
         <h2 style="position: absolute; left: 50%; transform: translateX(-50%); margin: 0;">
-            La Tiendita de Jonh
+            La Tiendita de John
         </h2>
         
         <!-- Espaciador para alinear los elementos a la derecha -->

@@ -1,11 +1,10 @@
-
 <!-- Ícono de tres líneas para abrir el menú, ubicado en la esquina superior izquierda -->
 <div class="menu-toggle" id="menu-toggle">
     <i class="fa fa-bars"></i>
 </div>
 
-    <!-- sidebar: style can be found in sidebar.less -->
-    <section class="sidebar"></section>
+<!-- sidebar: style can be found in sidebar.less -->
+<section class="sidebar"></section>
 
 <!-- Menú Lateral -->
 <aside class="main-sidebar collapsed" id="sidebar">
@@ -30,12 +29,13 @@
         <ul class="sidebar-menu" data-widget="tree">
             <li class="header">MENU PRINCIPAL</li>
             <li class="treeview">
-                <a href="#"><i class="fa fa-archive"></i> <span>Almacén</span>
+                <a href="#" onclick="toggleSubMenu()">
+                    <i class="fa fa-archive"></i> <span>Almacén</span>
                     <span class="pull-right-container">
-                        <i class="fa fa-angle-left pull-right"></i>
+                        <i id="almacenArrow" class="fa fa-angle-left pull-right"></i>
                     </span>
                 </a>
-                <ul class="treeview-menu">
+                <ul class="treeview-menu" id="almacenSubmenu" style="display: none;">
                     <li><a href="categoria">Categorias</a></li>
                     <li><a href="productos">Productos</a></li>
                 </ul>
