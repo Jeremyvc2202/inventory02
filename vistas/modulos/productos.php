@@ -53,13 +53,13 @@ require_once "modelos/marca.modelo.php";
                       <td><img src="'.$value["imagen"].'" width="40px"></td>
                       <td>'.$value["codigo"].'</td>
                       <td>'.$value["descripcion"].'</td>
-                      <td>'.$value["categoria"].'</td>
-                      <td>'.$value["marca"].'</td>
+                      <td>'.$value["id_categoria"].'</td>
+                      <td>'.$value["id_marca"].'</td>
                       <td>'.$value["stock"].'</td>
                       <td>'.$value["precio_compra"].'</td>
                       <td>'.$value["precio_venta"].'</td>
                       <td>'.$value["estado"].'</td>
-                      <td>'.$value["fecha_agregado"].'</td>
+                      <td>'.$value["fecha_vencimiento"].'</td>
                       <td>
                         <div class="btn-group">
                           <button class="btn btn-warning btnEditarProducto" idProducto="'.$value["id"].'" data-toggle="modal" data-target="#modalEditarProducto"><i class="fa fa-pencil"></i></button>
@@ -166,16 +166,12 @@ require_once "modelos/marca.modelo.php";
                 <br>
               </div>
             </div>
-              <!-- Checkbox y campo de porcentaje alineados según la referencia -->
+            <!-- Checkbox y campo de porcentaje alineados -->
             <div class="form-group" style="display: flex; align-items: center; margin-top: 10px;">
-              
-              <!-- Checkbox y texto alineado a la izquierda -->
               <label style="margin-left: 245px;">
                 <input type="checkbox" class="minimal porcentaje" checked id="utilizarPorcentaje">
                 Utilizar porcentaje
               </label>
-
-              <!-- Campo de porcentaje alineado a la derecha, con tamaño ajustado -->
               <div class="input-group" style="width: 150px; margin-left: auto;">
                 <input type="number" class="form-control input-lg nuevoPorcentaje" min="0" value="40" required style="text-align: center;">
                 <span class="input-group-addon"><i class="fa fa-percent"></i></span>
@@ -258,10 +254,10 @@ require_once "modelos/marca.modelo.php";
     });
 
     $('.datepicker').datepicker({
-      format: 'yyyy-mm-dd',  // Formato de fecha
-      startDate: new Date(), // Fecha mínima es hoy
-      autoclose: true,       // Cierra automáticamente el calendario al seleccionar
-      todayHighlight: true   // Resalta la fecha de hoy
+      format: 'yyyy-mm-dd',  
+      startDate: new Date(), 
+      autoclose: true,       
+      todayHighlight: true   
     });
 
     $('#utilizarPorcentaje').change(function() {
@@ -281,6 +277,21 @@ require_once "modelos/marca.modelo.php";
           let precioVenta = precioCompra + (precioCompra * porcentaje / 100);
           $('#nuevoPrecioVenta').val(precioVenta.toFixed(2));
         }
+      }
+    });
+
+    $(".nuevaImagen").change(function() {
+      const imagen = this.files[0];
+      
+      if (imagen && imagen.size <= 2097152) { 
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          $(".previsualizar").attr("src", e.target.result);
+        }
+        reader.readAsDataURL(imagen);
+      } else {
+        alert("El archivo excede el límite de 2MB");
+        $(".nuevaImagen").val("");
       }
     });
   });
