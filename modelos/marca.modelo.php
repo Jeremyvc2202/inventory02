@@ -7,6 +7,7 @@ class ModeloMarca {
     /*=============================================
     MOSTRAR MARCAS
     =============================================*/
+
     static public function mdlMostrarMarca($tabla, $item, $valor) {
 
         if ($item != null) {

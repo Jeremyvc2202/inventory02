@@ -1,6 +1,8 @@
 <?php
 require_once "controladores/productos.controlador.php";
 require_once "modelos/productos.modelo.php";
+require_once "controladores/marca.controlador.php"; // Añadido controlador para marcas
+require_once "modelos/marca.modelo.php"; // Añadido modelo para marcas
 ?>
 
 <div class="content-wrapper">
@@ -29,6 +31,7 @@ require_once "modelos/productos.modelo.php";
            <th>Código</th>
            <th>Descripción</th>
            <th>Categoría</th>
+           <th>Marca</th>
            <th>Stock</th>
            <th>Precio de compra</th>
            <th>Precio de venta</th>
@@ -51,6 +54,7 @@ require_once "modelos/productos.modelo.php";
                       <td>'.$value["codigo"].'</td>
                       <td>'.$value["descripcion"].'</td>
                       <td>'.$value["categoria"].'</td>
+                      <td>'.$value["marca"].'</td> <!-- Añadido campo de marca -->
                       <td>'.$value["stock"].'</td>
                       <td>'.$value["precio_compra"].'</td>
                       <td>'.$value["precio_venta"].'</td>
@@ -100,9 +104,31 @@ require_once "modelos/productos.modelo.php";
                 </select>
               </div>
             </div>
-            
-            
-      
+
+            <!-- Selección de marca con búsqueda -->
+            <div class="form-group">
+              <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-tags"></i></span>
+                <select class="form-control input-lg select2" id="nuevaMarca" name="nuevaMarca">
+                  <option value="">Seleccionar marca</option>
+                  <?php
+                    $item = null;
+                    $valor = null;
+                    $marcas = ControladorMarca::ctrMostrarMarca($item, $valor);
+                    foreach ($marcas as $key => $value) {
+                      echo '<option value="'.$value["id_marca"].'">'.$value["descripcion"].'</option>';
+                    }
+                  ?>
+                </select>
+              </div>
+            </div>
+            <!-- Campo de fecha de vencimiento -->
+            <div class="form-group">
+              <div class="input-group date">
+                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                <input type="text" class="form-control input-lg datepicker" id="fechaVencimiento" name="fechaVencimiento" placeholder="Fecha de vencimiento" required>
+              </div>
+            </div>
             <!-- Código -->
             <div class="form-group">
               <div class="input-group">
@@ -221,3 +247,30 @@ require_once "modelos/productos.modelo.php";
     border-color: #dc3545;
   }
 </style>
+<script>
+  $(document).ready(function() {
+    $('.select2').select2({
+      placeholder: "Seleccionar marca",
+      allowClear: true
+    });
+  });
+</script>
+
+<script>
+  $(document).ready(function() {
+    // Inicializar Select2
+    $('.select2').select2({
+      placeholder: "Seleccionar marca",
+      allowClear: true
+    });
+
+    // Inicializar Datepicker para fecha de vencimiento
+    $('.datepicker').datepicker({
+      format: 'yyyy-mm-dd',  // Formato de fecha
+      startDate: new Date(), // Fecha mínima es hoy
+      autoclose: true,       // Cierra automáticamente el calendario al seleccionar
+      todayHighlight: true   // Resalta la fecha de hoy
+    });
+  });
+</script>
+

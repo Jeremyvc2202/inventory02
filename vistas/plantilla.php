@@ -69,6 +69,16 @@
     <!-- chart js -->
     <script src="vistas/bower_components/Chart.js/Chart.js"></script>
     <link rel="icon" type="image/png" href="images/DB_16х16.png">
+    <!-- Incluir CSS de Select2 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+    <!-- Incluir JS de Select2 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+    <!-- CSS de Bootstrap Datepicker -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" rel="stylesheet">
+    <!-- JS de Bootstrap Datepicker -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+
+
 
     <!-- Estilos CSS necesarios -->
     <link rel="stylesheet" href="vistas/dist/css/lib/getmdl-select.min.css">
