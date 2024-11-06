@@ -92,7 +92,7 @@ require_once "modelos/marca.modelo.php"; // Añadido modelo para marcas
               <div class="input-group">
                 <span class="input-group-addon"><i class="fa fa-th"></i></span> 
                 <select class="form-control input-lg Seleccionar-categorias" id="nuevaCategoria" name="nuevaCategoria" required>
-                  <option value="">Seleccionar categoría</option>
+                  <option value="">Seleccionar Producto</option>
                   <?php
                     $item = null;
                     $valor = null;
@@ -274,3 +274,31 @@ require_once "modelos/marca.modelo.php"; // Añadido modelo para marcas
   });
 </script>
 
+<script>
+  $(document).ready(function() {
+    // Inicializar Select2
+    $('.select2').select2({
+      placeholder: "Seleccionar marca",
+      allowClear: true
+    });
+
+    // Inicializar Datepicker para fecha de vencimiento
+    $('.datepicker').datepicker({
+      format: 'yyyy-mm-dd',  // Formato de fecha
+      startDate: new Date(), // Fecha mínima es hoy
+      autoclose: true,       // Cierra automáticamente el calendario al seleccionar
+      todayHighlight: true   // Resalta la fecha de hoy
+    });
+
+    // Cálculo automático del precio de venta basado en el porcentaje
+    $('#nuevoPrecioCompra, .nuevoPorcentaje').on('input', function() {
+      let precioCompra = parseFloat($('#nuevoPrecioCompra').val());
+      let porcentaje = parseFloat($('.nuevoPorcentaje').val());
+
+      if (!isNaN(precioCompra) && !isNaN(porcentaje)) {
+        let precioVenta = precioCompra + (precioCompra * porcentaje / 100);
+        $('#nuevoPrecioVenta').val(precioVenta.toFixed(2));
+      }
+    });
+  });
+</script>
