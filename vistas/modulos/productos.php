@@ -204,7 +204,7 @@ require_once "modelos/marca.modelo.php";
   </div>
 </div>
 
-<!-- CSS Estilos Personalizados -->
+<!-- CSS Estilo -->
 <style>
   body, .content-wrapper {
     background-color: #f4f6f9;
@@ -245,6 +245,57 @@ require_once "modelos/marca.modelo.php";
     border-color: #dc3545;
   }
 </style>
+
+<script>
+  $(document).ready(function() {
+    $('.select2').select2({
+      placeholder: "Seleccionar marca",
+      allowClear: true
+    });
+
+    $('.datepicker').datepicker({
+      format: 'yyyy-mm-dd',  
+      startDate: new Date(), 
+      autoclose: true,       
+      todayHighlight: true   
+    });
+
+    $('#utilizarPorcentaje').change(function() {
+      const isChecked = $(this).is(':checked');
+      $('.nuevoPorcentaje').prop('disabled', !isChecked);
+      if (!isChecked) {
+        $('#nuevoPrecioVenta').val('');
+      }
+    });
+
+    $('#nuevoPrecioCompra, .nuevoPorcentaje').on('input', function() {
+      if ($('#utilizarPorcentaje').is(':checked')) {
+        let precioCompra = parseFloat($('#nuevoPrecioCompra').val());
+        let porcentaje = parseFloat($('.nuevoPorcentaje').val());
+
+        if (!isNaN(precioCompra) && !isNaN(porcentaje)) {
+          let precioVenta = precioCompra + (precioCompra * porcentaje / 100);
+          $('#nuevoPrecioVenta').val(precioVenta.toFixed(2));
+        }
+      }
+    });
+
+    $(".nuevaImagen").change(function() {
+      const imagen = this.files[0];
+      
+      if (imagen && imagen.size <= 2097152) { 
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          $(".previsualizar").attr("src", e.target.result);
+        }
+        reader.readAsDataURL(imagen);
+      } else {
+        alert("El archivo excede el límite de 2MB");
+        $(".nuevaImagen").val("");
+      }
+    });
+  });
+</script>
 
 <script>
   $(document).ready(function() {

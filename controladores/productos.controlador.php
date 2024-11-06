@@ -16,7 +16,7 @@ class ControladorProductos {
     =============================================*/
     static public function ctrCrearProducto() {
         if (isset($_POST["nuevaDescripcion"])) {
-            if (($_POST["nuevaDescripcion"]) &&
+            if ($_POST["nuevaDescripcion"] &&
                 preg_match('/^[0-9]+$/', $_POST["nuevoStock"]) && 
                 preg_match('/^[0-9.]+$/', $_POST["nuevoPrecioCompra"]) &&
                 preg_match('/^[0-9.]+$/', $_POST["nuevoPrecioVenta"])) {
@@ -64,8 +64,8 @@ class ControladorProductos {
                     "precio_compra" => $_POST["nuevoPrecioCompra"],
                     "precio_venta" => $_POST["nuevoPrecioVenta"],
                     "imagen" => $ruta,
-                    "id_marca" => $_POST["nuevaMarca"], // Nueva marca
-                    "fecha_vencimiento" => $_POST["fechaVencimiento"] // Nueva fecha de vencimiento
+                    "id_marca" => $_POST["nuevaMarca"],
+                    "fecha_vencimiento" => $_POST["fechaVencimiento"]
                 );
 
                 $respuesta = ModeloProductos::mdlIngresarProducto($tabla, $datos);
