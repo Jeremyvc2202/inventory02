@@ -33,7 +33,7 @@ class ControladorProductos{
 				VALIDAR IMAGEN
 				=============================================*/
 
-			   	$ruta = "views/img/productos/default/anonymous.png";
+			   	$ruta = "vistas/img/productos/default/anonymous.png";
 
 			   	if(isset($_FILES["nuevaImagen"]["tmp_name"])){
 
@@ -46,7 +46,7 @@ class ControladorProductos{
 					CREAMOS EL DIRECTORIO DONDE VAMOS A GUARDAR LA FOTO DEL USUARIO
 					=============================================*/
 
-					$directorio = "views/img/productos/".$_POST["nuevoCodigo"];
+					$directorio = "vistas/img/productos/".$_POST["nuevoCodigo"];
 
 					mkdir($directorio, 0755);
 
@@ -62,7 +62,7 @@ class ControladorProductos{
 
 						$aleatorio = mt_rand(100,999);
 
-						$ruta = "views/img/productos/".$_POST["nuevoCodigo"]."/".$aleatorio.".jpg";
+						$ruta = "vistas/img/productos/".$_POST["nuevoCodigo"]."/".$aleatorio.".jpg";
 
 						$origen = imagecreatefromjpeg($_FILES["nuevaImagen"]["tmp_name"]);						
 
@@ -82,7 +82,7 @@ class ControladorProductos{
 
 						$aleatorio = mt_rand(100,999);
 
-						$ruta = "views/img/productos/".$_POST["nuevoCodigo"]."/".$aleatorio.".png";
+						$ruta = "vistas/img/productos/".$_POST["nuevoCodigo"]."/".$aleatorio.".png";
 
 						$origen = imagecreatefrompng($_FILES["nuevaImagen"]["tmp_name"]);						
 

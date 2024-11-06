@@ -1,8 +1,8 @@
 <?php
 require_once "controladores/productos.controlador.php";
 require_once "modelos/productos.modelo.php";
-require_once "controladores/marca.controlador.php"; // Añadido controlador para marcas
-require_once "modelos/marca.modelo.php"; // Añadido modelo para marcas
+require_once "controladores/marca.controlador.php";
+require_once "modelos/marca.modelo.php";
 ?>
 
 <div class="content-wrapper">
@@ -44,7 +44,7 @@ require_once "modelos/marca.modelo.php"; // Añadido modelo para marcas
           <?php
             $item = null;
             $valor = null;
-            $orden = ""; // Agrega un valor predeterminado si no necesitas ordenar.
+            $orden = "";
             $productos = ControladorProductos::ctrMostrarProductos($item, $valor, $orden);
 
             foreach ($productos as $key => $value) {
@@ -54,7 +54,7 @@ require_once "modelos/marca.modelo.php"; // Añadido modelo para marcas
                       <td>'.$value["codigo"].'</td>
                       <td>'.$value["descripcion"].'</td>
                       <td>'.$value["categoria"].'</td>
-                      <td>'.$value["marca"].'</td> <!-- Añadido campo de marca -->
+                      <td>'.$value["marca"].'</td>
                       <td>'.$value["stock"].'</td>
                       <td>'.$value["precio_compra"].'</td>
                       <td>'.$value["precio_venta"].'</td>
@@ -171,7 +171,7 @@ require_once "modelos/marca.modelo.php"; // Añadido modelo para marcas
               
               <!-- Checkbox y texto alineado a la izquierda -->
               <label style="margin-left: 245px;">
-                <input type="checkbox" class="minimal porcentaje" checked>
+                <input type="checkbox" class="minimal porcentaje" checked id="utilizarPorcentaje">
                 Utilizar porcentaje
               </label>
 
@@ -188,7 +188,9 @@ require_once "modelos/marca.modelo.php"; // Añadido modelo para marcas
               <input type="file" class="nuevaImagen" name="nuevaImagen">
               <p class="help-block">Peso máximo de la imagen 2MB</p>
               <img src="vistas/img/productos/default/anonymous.png" class="img-thumbnail previsualizar" width="100px">
+              <input type="hidden" name="imagenActual" id="imagenActual">
             </div>
+
           </div>
         
         <!-- Footer del modal con botones alineados -->
@@ -247,42 +249,14 @@ require_once "modelos/marca.modelo.php"; // Añadido modelo para marcas
     border-color: #dc3545;
   }
 </style>
+
 <script>
   $(document).ready(function() {
     $('.select2').select2({
       placeholder: "Seleccionar marca",
       allowClear: true
     });
-  });
-</script>
 
-<script>
-  $(document).ready(function() {
-    // Inicializar Select2
-    $('.select2').select2({
-      placeholder: "Seleccionar marca",
-      allowClear: true
-    });
-
-    // Inicializar Datepicker para fecha de vencimiento
-    $('.datepicker').datepicker({
-      format: 'yyyy-mm-dd',  // Formato de fecha
-      startDate: new Date(), // Fecha mínima es hoy
-      autoclose: true,       // Cierra automáticamente el calendario al seleccionar
-      todayHighlight: true   // Resalta la fecha de hoy
-    });
-  });
-</script>
-
-<script>
-  $(document).ready(function() {
-    // Inicializar Select2
-    $('.select2').select2({
-      placeholder: "Seleccionar marca",
-      allowClear: true
-    });
-
-    // Inicializar Datepicker para fecha de vencimiento
     $('.datepicker').datepicker({
       format: 'yyyy-mm-dd',  // Formato de fecha
       startDate: new Date(), // Fecha mínima es hoy
@@ -290,14 +264,23 @@ require_once "modelos/marca.modelo.php"; // Añadido modelo para marcas
       todayHighlight: true   // Resalta la fecha de hoy
     });
 
-    // Cálculo automático del precio de venta basado en el porcentaje
+    $('#utilizarPorcentaje').change(function() {
+      const isChecked = $(this).is(':checked');
+      $('.nuevoPorcentaje').prop('disabled', !isChecked);
+      if (!isChecked) {
+        $('#nuevoPrecioVenta').val('');
+      }
+    });
+
     $('#nuevoPrecioCompra, .nuevoPorcentaje').on('input', function() {
-      let precioCompra = parseFloat($('#nuevoPrecioCompra').val());
-      let porcentaje = parseFloat($('.nuevoPorcentaje').val());
+      if ($('#utilizarPorcentaje').is(':checked')) {
+        let precioCompra = parseFloat($('#nuevoPrecioCompra').val());
+        let porcentaje = parseFloat($('.nuevoPorcentaje').val());
 
-      if (!isNaN(precioCompra) && !isNaN(porcentaje)) {
-        let precioVenta = precioCompra + (precioCompra * porcentaje / 100);
-        $('#nuevoPrecioVenta').val(precioVenta.toFixed(2));
+        if (!isNaN(precioCompra) && !isNaN(porcentaje)) {
+          let precioVenta = precioCompra + (precioCompra * porcentaje / 100);
+          $('#nuevoPrecioVenta').val(precioVenta.toFixed(2));
+        }
       }
     });
   });
