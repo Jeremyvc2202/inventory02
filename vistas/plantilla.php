@@ -50,7 +50,11 @@
     <script src="vistas/bower_components/datatables.net-bs/js/dataTables.responsive.min.js"></script>
     <script src="vistas/bower_components/datatables.net-bs/js/responsive.bootstrap.min.js"></script>
     <!-- SweetAlert 2 -->
-     
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- sweetAlert registrar marcas -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
     <script src="vistas/plugins/sweetalert2/sweetalert2.all.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script>
     <!-- InputMask -->

@@ -66,7 +66,6 @@ require_once "modelos/marca.modelo.php";
         </div>
         <div class="modal-body">
           <div class="box-body">
-            <!-- Entrada para la descripción de la marca -->
             <div class="form-group">
               <div class="input-group">
                 <span class="input-group-addon"><i class="fa fa-pencil"></i></span> 
@@ -99,7 +98,6 @@ require_once "modelos/marca.modelo.php";
         </div>
         <div class="modal-body">
           <div class="box-body">
-            <!-- Entrada para la descripción de la marca -->
             <div class="form-group">
               <div class="input-group">
                 <span class="input-group-addon"><i class="fa fa-pencil"></i></span> 
@@ -178,3 +176,7 @@ $eliminarMarca->ctrEliminarMarca();
     border-color: #dc3545;
   }
 </style>
+
+<!-- SweetAlert2 Script -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="marca.js"></script>
