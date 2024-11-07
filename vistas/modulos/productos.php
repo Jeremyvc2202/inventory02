@@ -26,7 +26,7 @@ require_once "modelos/marca.modelo.php";
        <table id="tablaCategorias" class="table table-bordered table-striped dt-responsive tablas" width="100%">
         <thead>
          <tr>
-           <th style="width:10px">#</th>
+           <th style="width:10px"></th>
            <th>Imagen</th>
            <th>Código</th>
            <th>Descripción</th>
@@ -92,7 +92,7 @@ require_once "modelos/marca.modelo.php";
               <div class="input-group">
                 <span class="input-group-addon"><i class="fa fa-th"></i></span> 
                 <select class="form-control input-lg Seleccionar-categorias" id="nuevaCategoria" name="nuevaCategoria" required>
-                  <option value="">Seleccionar Producto</option>
+                  <option value="">Seleccionar Categoría</option>
                   <?php
                     $item = null;
                     $valor = null;

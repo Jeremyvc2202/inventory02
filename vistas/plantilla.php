@@ -50,6 +50,7 @@
     <script src="vistas/bower_components/datatables.net-bs/js/dataTables.responsive.min.js"></script>
     <script src="vistas/bower_components/datatables.net-bs/js/responsive.bootstrap.min.js"></script>
     <!-- SweetAlert 2 -->
+     
     <script src="vistas/plugins/sweetalert2/sweetalert2.all.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script>
     <!-- InputMask -->
@@ -111,32 +112,40 @@ desired effect
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header is-small-screen">
     <!-- url amigables -->
     <?php
-        // llamando al cabezote
-        include "modulos/cabezote.php";
-        //llamando al menu
-        include "modulos/menu.php";
-        if(isset($_GET["ruta"])){
-            if($_GET["ruta"] == "inicio"         ||
-               $_GET["ruta"] == "categoria"  ||
-               $_GET["ruta"] == "usuarios"   ||
-               $_GET["ruta"] == "productos"  ||
-               $_GET["ruta"] == "salir"){
-            include "modulos/".$_GET["ruta"].".php";
-            }else{
-                include "modulos/404.php";
-            }
-        }else{
-            include "modulos/inicio.php";
+    // Llamando al cabezote
+    include "modulos/cabezote.php";
+    // Llamando al menú
+    include "modulos/menu.php";
+    if (isset($_GET["ruta"])) {
+        if ($_GET["ruta"] == "inicio" ||
+            $_GET["ruta"] == "categoria" ||
+            $_GET["ruta"] == "usuarios" ||
+            $_GET["ruta"] == "productos" ||
+            $_GET["ruta"] == "marca" ||  // Faltaba esta coma
+            $_GET["ruta"] == "salir") {
+
+            include "modulos/" . $_GET["ruta"] . ".php";
+
+        } else {
+            include "modulos/404.php";
         }
-        // llamando a footer
-        include "modulos/footer.php";
-        ?>
+    } else {
+        include "modulos/inicio.php";
+    }
+    // Llamando a footer
+    include "modulos/footer.php";
+?>
+
         
     </div>
     <!-- dataTable spanish -->
     <script src="vistas/js/plantilla.js"></script>
     <!-- categoria -->
     <script src="vistas/js/categoria.js"></script>
+    <!-- Productos -->
+    <script src="vistas/js/productos.js"></script>
+    <!-- Marcas -->
+    <script src="vistas/js/marca.js"></script>
 </body>
 
 </html>
