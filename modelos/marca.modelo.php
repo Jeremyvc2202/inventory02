@@ -10,13 +10,14 @@ class ModeloMarca {
         $stmt->bindParam(":descripcion", $datos["descripcion"], PDO::PARAM_STR);
 
         if ($stmt->execute()) {
+            $stmt->closeCursor();
+            $stmt = null;  
             return "ok";
         } else {
+            $stmt->closeCursor();
+            $stmt = null;
             return "error";
         }
-
-        $stmt->closeCursor();
-        $stmt = null;  // Liberar la conexión
     }
 
     // Método para editar una marca existente
@@ -26,13 +27,14 @@ class ModeloMarca {
         $stmt->bindParam(":id_marca", $datos["id_marca"], PDO::PARAM_INT);
 
         if ($stmt->execute()) {
+            $stmt->closeCursor();
+            $stmt = null;
             return "ok";
         } else {
+            $stmt->closeCursor();
+            $stmt = null;
             return "error";
         }
-
-        $stmt->closeCursor();
-        $stmt = null;  // Liberar la conexión
     }
 
     // Método para eliminar una marca de la base de datos
@@ -41,13 +43,14 @@ class ModeloMarca {
         $stmt->bindParam(":id_marca", $datos, PDO::PARAM_INT);
 
         if ($stmt->execute()) {
+            $stmt->closeCursor();
+            $stmt = null;
             return "ok";
         } else {
+            $stmt->closeCursor();
+            $stmt = null;
             return "error";
         }
-
-        $stmt->closeCursor();
-        $stmt = null;  // Liberar la conexión
     }
 
     // Método para mostrar una marca específica o todas las marcas
@@ -57,29 +60,41 @@ class ModeloMarca {
             $stmt->bindParam(":" . $item, $valor, PDO::PARAM_STR);
             $stmt->execute();
             
-            // Fetch devuelve false si no encuentra registros, por lo que este return se adapta a ese comportamiento.
             $resultado = $stmt->fetch();
-            return $resultado ? $resultado : false;  // Devuelve `false` si no encuentra coincidencias
+            $stmt->closeCursor();
+            $stmt = null;
+            return $resultado ? $resultado : false;
         } else {
             $stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla");
             $stmt->execute();
-            return $stmt->fetchAll();
+            $resultado = $stmt->fetchAll();
+            $stmt->closeCursor();
+            $stmt = null;
+            return $resultado;
         }
-
-        $stmt->closeCursor();
-        $stmt = null;  // Liberar la conexión
     }
 
-    // Método específico para verificar si una marca ya existe (opcional)
+    // Método para mostrar productos con el nombre de la marca en lugar del ID de la marca
+    public static function mdlMostrarProductosConMarca($tablaProductos, $tablaMarcas) {
+        $stmt = Conexion::conectar()->prepare("SELECT p.*, m.descripcion AS marca 
+                                               FROM $tablaProductos p
+                                               JOIN $tablaMarcas m ON p.id_marca = m.id_marca");
+        $stmt->execute();
+        $resultado = $stmt->fetchAll();
+        $stmt->closeCursor();
+        $stmt = null;
+        return $resultado;
+    }
+
+    // Método específico para verificar si una marca ya existe
     public static function mdlMarcaExiste($tabla, $descripcion) {
         $stmt = Conexion::conectar()->prepare("SELECT * FROM $tabla WHERE descripcion = :descripcion");
         $stmt->bindParam(":descripcion", $descripcion, PDO::PARAM_STR);
         $stmt->execute();
         
-        // Este método retorna `true` si la marca existe, `false` si no existe
         $resultado = $stmt->fetch();
         $stmt->closeCursor();
-        $stmt = null;  // Liberar la conexión
+        $stmt = null;
         return $resultado ? true : false;
     }
 }
