@@ -126,6 +126,7 @@ desired effect
             $_GET["ruta"] == "usuarios" ||
             $_GET["ruta"] == "productos" ||
             $_GET["ruta"] == "marca" ||  // Faltaba esta coma
+            $_GET["ruta"] == "crear-venta" ||
             $_GET["ruta"] == "salir") {
 
             include "modulos/" . $_GET["ruta"] . ".php";
@@ -150,6 +151,8 @@ desired effect
     <script src="vistas/js/productos.js"></script>
     <!-- Marcas -->
     <script src="vistas/js/marca.js"></script>
+    <!-- Ventas -->
+    <script src="vistas/js/ventas.js"></script>
 </body>
 
 </html>

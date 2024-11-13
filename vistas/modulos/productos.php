@@ -1,4 +1,4 @@
-<?php
+<?php 
 require_once "controladores/productos.controlador.php";
 require_once "modelos/productos.modelo.php";
 require_once "controladores/marca.controlador.php";
@@ -36,7 +36,7 @@ require_once "modelos/marca.modelo.php";
            <th>Precio de compra</th>
            <th>Precio de venta</th>
            <th>Estado</th>
-           <th>Agregado</th>
+           <th>Fecha de Vencimiento</th>
            <th>Acciones</th>
          </tr> 
         </thead>

@@ -100,7 +100,7 @@ $(".nuevaImagen").change(function(){
 $("#nuevaCategoria").change(function(){
   var idCategoria = $(this).val();
   var datos = new FormData();
-  datos.append("idCategoria",idCategoria);
+  datos.append("idcategoria",idCategoria);
   $.ajax({
     url: "ajax/productos.ajax.php",
     method: "POST",

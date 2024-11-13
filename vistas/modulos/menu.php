@@ -41,6 +41,20 @@
                     <li><a href="marca">Marcas</a></li>
                 </ul>
             </li>
+            <li class="treeview">
+                <a href="#" onclick="toggleVentasSubMenu()">
+                    <i class="fa fa-list-ul"></i> 
+                    <span>Ventas</span>
+                    <span class="pull-right-container">
+                        <i id="ventasArrow" class="fa fa-angle-left pull-right"></i>
+                    </span>
+                </a>
+                <ul class="treeview-menu" id="ventasSubmenu" style="display: none;">
+                    <li><a href="ventas"><i class="fa fa-circle-o"></i> Administrar ventas</a></li>
+                    <li><a href="crear-venta"><i class="fa fa-circle-o"></i> Crear venta</a></li>
+                    <li><a href="reportes"><i class="fa fa-circle-o"></i> Reporte de ventas</a></li>
+                </ul>
+            </li>
         </ul>
         <!-- /.sidebar-menu -->
     </section>
@@ -49,7 +63,7 @@
 
 <!-- JavaScript para alternar la visibilidad del menú y el icono de flecha -->
 <script>
-    // Toggle del menú lateral y del submenú de "Almacén"
+    // Toggle del submenú de "Almacén"
     function toggleSubMenu() {
         const subMenu = document.getElementById('almacenSubmenu');
         const arrowIcon = document.getElementById('almacenArrow');
@@ -65,13 +79,30 @@
         }
     }
 
-    // Cierra el menú al hacer clic fuera de él
+    // Toggle del submenú de "Ventas"
+    function toggleVentasSubMenu() {
+        const ventasSubMenu = document.getElementById('ventasSubmenu');
+        const ventasArrow = document.getElementById('ventasArrow');
+
+        if (ventasSubMenu.style.display === 'none') {
+            ventasSubMenu.style.display = 'block';
+            ventasArrow.classList.remove('fa-angle-left');
+            ventasArrow.classList.add('fa-angle-down');
+        } else {
+            ventasSubMenu.style.display = 'none';
+            ventasArrow.classList.remove('fa-angle-down');
+            ventasArrow.classList.add('fa-angle-left');
+        }
+    }
+
+    // Toggle del menú lateral
     document.getElementById("menu-toggle").addEventListener("click", function(event) {
         const sidebar = document.getElementById("sidebar");
         sidebar.classList.toggle("collapsed");
         event.stopPropagation(); // Evita que el clic cierre el menú inmediatamente
     });
 
+    // Cierra el menú al hacer clic fuera de él
     document.addEventListener("click", function(event) {
         const sidebar = document.getElementById("sidebar");
         const toggle = document.getElementById("menu-toggle");
