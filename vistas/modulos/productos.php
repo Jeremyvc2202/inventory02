@@ -58,7 +58,9 @@ require_once "modelos/marca.modelo.php";
                       <td>'.$value["stock"].'</td>
                       <td>'.$value["precio_compra"].'</td>
                       <td>'.$value["precio_venta"].'</td>
-                      <td>'.$value["estado"].'</td>
+                      <td>
+                        <input type="checkbox" class="toggle-switch" data-id="'.$value["id"].'" '.($value["estado"] == 1 ? "checked" : "").'>
+                      </td>
                       <td>'.$value["fecha_vencimiento"].'</td>
                       <td>
                         <div class="btn-group">
@@ -244,6 +246,39 @@ require_once "modelos/marca.modelo.php";
     background-color: #dc3545;
     border-color: #dc3545;
   }
+
+  /* Toggle switch */
+  .toggle-switch {
+    position: relative;
+    width: 40px;
+    height: 20px;
+    -webkit-appearance: none;
+    background-color: #ddd;
+    outline: none;
+    border-radius: 20px;
+    transition: background 0.3s;
+    cursor: pointer;
+  }
+
+  .toggle-switch:checked {
+    background-color: #4CAF50;
+  }
+
+  .toggle-switch::after {
+    content: '';
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    top: 1px;
+    left: 1px;
+    background-color: #fff;
+    transition: 0.3s;
+  }
+
+  .toggle-switch:checked::after {
+    left: 21px;
+  }
 </style>
 
 <script>
@@ -260,90 +295,30 @@ require_once "modelos/marca.modelo.php";
       todayHighlight: true   
     });
 
-    $('#utilizarPorcentaje').change(function() {
-      const isChecked = $(this).is(':checked');
-      $('.nuevoPorcentaje').prop('disabled', !isChecked);
-      if (!isChecked) {
-        $('#nuevoPrecioVenta').val('');
-      }
-    });
+    // Toggle switch update state
+    document.querySelectorAll('.toggle-switch').forEach(switchElement => {
+      switchElement.addEventListener('change', function() {
+        const idProducto = this.getAttribute('data-id');
+        const estado = this.checked ? 1 : 0;
 
-    $('#nuevoPrecioCompra, .nuevoPorcentaje').on('input', function() {
-      if ($('#utilizarPorcentaje').is(':checked')) {
-        let precioCompra = parseFloat($('#nuevoPrecioCompra').val());
-        let porcentaje = parseFloat($('.nuevoPorcentaje').val());
+        const datos = new FormData();
+        datos.append('idProducto', idProducto);
+        datos.append('estado', estado);
 
-        if (!isNaN(precioCompra) && !isNaN(porcentaje)) {
-          let precioVenta = precioCompra + (precioCompra * porcentaje / 100);
-          $('#nuevoPrecioVenta').val(precioVenta.toFixed(2));
-        }
-      }
-    });
-
-    $(".nuevaImagen").change(function() {
-      const imagen = this.files[0];
-      
-      if (imagen && imagen.size <= 2097152) { 
-        const reader = new FileReader();
-        reader.onload = function(e) {
-          $(".previsualizar").attr("src", e.target.result);
-        }
-        reader.readAsDataURL(imagen);
-      } else {
-        alert("El archivo excede el límite de 2MB");
-        $(".nuevaImagen").val("");
-      }
-    });
-  });
-</script>
-
-<script>
-  $(document).ready(function() {
-    $('.select2').select2({
-      placeholder: "Seleccionar marca",
-      allowClear: true
-    });
-
-    $('.datepicker').datepicker({
-      format: 'yyyy-mm-dd',  
-      startDate: new Date(), 
-      autoclose: true,       
-      todayHighlight: true   
-    });
-
-    $('#utilizarPorcentaje').change(function() {
-      const isChecked = $(this).is(':checked');
-      $('.nuevoPorcentaje').prop('disabled', !isChecked);
-      if (!isChecked) {
-        $('#nuevoPrecioVenta').val('');
-      }
-    });
-
-    $('#nuevoPrecioCompra, .nuevoPorcentaje').on('input', function() {
-      if ($('#utilizarPorcentaje').is(':checked')) {
-        let precioCompra = parseFloat($('#nuevoPrecioCompra').val());
-        let porcentaje = parseFloat($('.nuevoPorcentaje').val());
-
-        if (!isNaN(precioCompra) && !isNaN(porcentaje)) {
-          let precioVenta = precioCompra + (precioCompra * porcentaje / 100);
-          $('#nuevoPrecioVenta').val(precioVenta.toFixed(2));
-        }
-      }
-    });
-
-    $(".nuevaImagen").change(function() {
-      const imagen = this.files[0];
-      
-      if (imagen && imagen.size <= 2097152) { 
-        const reader = new FileReader();
-        reader.onload = function(e) {
-          $(".previsualizar").attr("src", e.target.result);
-        }
-        reader.readAsDataURL(imagen);
-      } else {
-        alert("El archivo excede el límite de 2MB");
-        $(".nuevaImagen").val("");
-      }
+        fetch('ajax/productos.ajax.php', {
+          method: 'POST',
+          body: datos
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.success) {
+            console.log('Estado actualizado correctamente');
+          } else {
+            console.log('Error al actualizar el estado');
+          }
+        })
+        .catch(error => console.error('Error:', error));
+      });
     });
   });
 </script>

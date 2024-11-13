@@ -38,7 +38,7 @@
                 <ul class="treeview-menu" id="almacenSubmenu" style="display: none;">
                     <li><a href="categoria">Categorias</a></li>
                     <li><a href="productos">Productos</a></li>
-                    <li><a href="marca">Marcas</a></li>
+                    <li><a href="marca">Laboratorio</a></li>
                 </ul>
             </li>
             <li class="treeview">
